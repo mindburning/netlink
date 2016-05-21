@@ -1,9 +1,10 @@
 # netlink
 
 Kategorie: Browsergame, Manager
+
 Technologie: HTML, JS, ... and a backend language ...
 
-# Konzept:
+# Konzept
 Du bist ein Netzwerk admin, direkt fertig mit dem Studium und beschließt dich im Bereich Netzwerkadministration selbständig zu machen. Du Mietest dir ein Büro mit einer Internet anbindung, du erhällst Anfragen, zur Bearbeitung von Rechenintensiven Prozessen. Du kaufst dir Rechner und stellst diese zusammen um die jewiligen Jobs in der gegebenen Zeit abarbeiten zu können. Bald merkst du das die Aufträge höhere Ansprüche an deine Hardware benötigen. Dein Büro wird zu klein und du Mietest oder kaufst dir Räume, die eine gute Internetanbindung haben, da viele Aufträge hohes Datenvolumen benötigen.
 
 Dein Unternehmen betreibt mittlerweile ein eigenes Rechenzentrum, welches du stetig weiterentwickelst und mit Hardware bestückst. Du stellst Mitarbeiter zur Wartung der Rechner ein, stellst Netzpläne auf, du erhällst nun größere Aufträge von Forschungszentren, der Wirtschaft und anderen Bereichen, mit denen du dein Rechenzentrum auslastest.
