@@ -1,0 +1,15 @@
+{
+  "name": "mindburning/netlink",
+  "description": "Kategorie: Browsergame, Manager",
+  "minimum-stability": "stable",
+  "license": "LGPL",
+  "authors": [
+    {
+      "name": "me",
+      "email": "me4-netlink@mailinator.com"
+    }
+  ],
+  "require": {
+    "components/three.js": "0.0.70"
+  }
+}

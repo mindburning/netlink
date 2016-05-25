@@ -1,80 +1,36 @@
 window.onload = function() {
-  Crafty.init();
+  var camera, scene, renderer;
+  var mesh;
+  var t = 0;
 
-  Crafty.sprite(
-      142,
-      227,
-      "assets/0001.png",
-      {
-        stone: [0,0,1,1]
-      }
-  );
+  camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, -1000, 1000 );
 
-  Crafty.sprite(
-      142,
-      227,
-      "assets/0002.png",
-      {
-        server1: [0,0,1,1],
-        server2: [1,0,1,1],
-        server3: [2,0,1,1],
-        server4: [3,0,1,1]
-      }
-  );
+  scene = new THREE.Scene();
 
-  Crafty.sprite(
-      142,
-      56,
-      "assets/0002.png",
-      {
-        node1: [10,1,1,1],
-        node2: [11,1,1,1],
-        node3: [12,1,1,1],
-        node4: [13,1,1,1]
-      }
-  );
-
-  iso = Crafty.diamondIso;
-  iso.init(142,142-94, 20, 20);
-  Crafty.log("over");
-  var z = 0;
-  for(var i = 10; i >= 0; i--) {
-    for(var y = 0; y < 20; y++) {
-      var tile = Crafty.e("2D, DOM, stone, Mouse")
-          .areaMap(new Crafty.polygon([71,130, 142,155, 142,200, 71,227, 0,200, 0,155]))
-          .bind("click", function(e) {
-            //destroy on right click
-            if(e.button === 2) this.destroy();
-          }).bind("MouseOver", function() {
-            this.sprite(1,0,1,1);
-          }).bind("MouseOut", function() {
-            this.sprite(0,0,1,1);
-          });
-      iso.place(tile, i, y, 0);
-      if (y%3==1) {
-        var tile2 = Crafty.e("2D, DOM, server" + (i % 4 + 1));
-        iso.place(tile2, i, y, 1);
-        var tile3 = Crafty.e("2D, DOM, node" + (i % 4 + 1));
-        iso.place(tile3, i, y, 2);
-      }
+  var texture = new THREE.ImageUtils.loadTexture( 'assets/models/textures/MetalFloorsBare0063_2_400.jpg' );
+  for (var x=-10;x<10;x++) {
+    for (var y=-10;y<10;y++) {
+      var geometry = new THREE.BoxGeometry( 100, 100, 0.1 );
+      var material = new THREE.MeshBasicMaterial( { map: texture } );
+      mesh = new THREE.Mesh( geometry, material );
+      mesh.translateX(x*101);
+      mesh.translateY(y*101);
+      scene.add( mesh );
     }
   }
-
-  Crafty.addEvent(this, Crafty.stage.elem, "mousedown", function(e) {
-    if(e.button > 1) return;
-    var base = {x: e.clientX, y: e.clientY};
-
-    function scroll(e) {
-      var dx = base.x - e.clientX,
-          dy = base.y - e.clientY;
-      base = {x: e.clientX, y: e.clientY};
-      Crafty.viewport.x -= dx;
-      Crafty.viewport.y -= dy;
-    };
-
-    Crafty.addEvent(this, Crafty.stage.elem, "mousemove", scroll);
-    Crafty.addEvent(this, Crafty.stage.elem, "mouseup", function() {
-      Crafty.removeEvent(this, Crafty.stage.elem, "mousemove", scroll);
-    });
-  });
+  renderer = new THREE.WebGLRenderer();
+  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  document.body.appendChild( renderer.domElement );
+  function animate() {
+    t+=0.0015;
+    requestAnimationFrame( animate );
+    //mesh.rotation.x += 0.005;
+    //mesh.rotation.z += 0.001;
+    camera.position.set(200*Math.sin(t),200*Math.cos(t),100);
+    camera.up = new THREE.Vector3(0,0,1);
+    camera.lookAt(new THREE.Vector3(0,0,0));
+    renderer.render( scene, camera );
+  }
+  animate();
 };
