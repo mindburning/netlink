@@ -12,8 +12,8 @@ window.onload = function() {
       // Function when resource is loaded
       function ( geometry ) {
         scene = geometry;
-        var s = geometry.getObjectByName("rack.simple").clone();
         var g = geometry.getObjectByName("grounds").clone();
+        var s = geometry.getObjectByName("racks").clone();
         var serv = geometry.getObjectByName("server.simple").clone();
 
         geometry.traverse( function ( object ) { if( object instanceof THREE.Mesh) { object.visible = false; } } );
@@ -43,10 +43,20 @@ window.onload = function() {
             mesh.translateY(y*1.01);
             //mesh.rotateX( -Math.PI / 2);
             scene.add( mesh );
-            var b = s.clone();
-            mesh.getObjectByName('rack.' + (y+20)%4).add(b);
-            var serv1 = serv.clone();
-            b.add(serv1);
+
+            if(Math.random()<0.2) {
+              var b = s.clone();
+              for(var d=0;d<12;d++) {
+                var serv1 = serv.clone();
+                serv1.getObjectByName('server.simple.0').visible = Math.round((d+y*y)/2)%4==0;
+                serv1.getObjectByName('server.simple.25').visible = Math.round((d+y*y)/2)%4==1;
+                serv1.getObjectByName('server.simple.50').visible = Math.round((d+y*y)/2)%4==2;
+                serv1.getObjectByName('server.simple.100').visible = Math.round((d+y*y)/2)%4==3;
+                b.getObjectByName('server.' + Math.floor(100 + y*2 + Math.random() * 2 + d) % 20).add(serv1);
+              }
+              mesh.getObjectByName('rack.' + (y + 20) % 4).add(b);
+            }
+
             //mesh.add( b );
           }
         }
