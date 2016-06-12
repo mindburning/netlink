@@ -2,8 +2,9 @@ window.onload = function() {
   var camera, scene, renderer;
   var mesh;
   var t = 0;
+  var zoom = 1/4;
 
-  camera = new THREE.OrthographicCamera( window.innerWidth / - 200, window.innerWidth / 200, window.innerHeight / 200, window.innerHeight / - 200, -1000, 1000 );
+  camera = new THREE.OrthographicCamera( window.innerWidth / - 100 * zoom, window.innerWidth / 100 * zoom, window.innerHeight / 100 * zoom, window.innerHeight / - 100 * zoom, -1000, 1000 );
 
   scene = new THREE.Scene();
 
@@ -15,6 +16,7 @@ window.onload = function() {
         var g = geometry.getObjectByName("grounds").clone();
         var s = geometry.getObjectByName("racks").clone();
         var serv = geometry.getObjectByName("server.simple").clone();
+        var serv2he = geometry.getObjectByName("server.2he").clone();
 
         geometry.traverse( function ( object ) { if( object instanceof THREE.Mesh) { object.visible = false; } } );
 
@@ -38,20 +40,22 @@ window.onload = function() {
             mesh.translateZ(y*101);
             */
             mesh = g.clone();
-            mesh.translateX(x*1.01);
+            mesh.translateX(x * 1.01);
             mesh.translateZ(0);
-            mesh.translateY(y*1.01);
+            mesh.translateY(y * 1.01);
             //mesh.rotateX( -Math.PI / 2);
             scene.add( mesh );
 
-            if(Math.random()<0.2) {
+            if(Math.random()<0.4) {
               var b = s.clone();
               for(var d=0;d<12;d++) {
-                var serv1 = serv.clone();
-                serv1.getObjectByName('server.simple.0').visible = Math.round((d+y*y)/2)%4==0;
-                serv1.getObjectByName('server.simple.25').visible = Math.round((d+y*y)/2)%4==1;
-                serv1.getObjectByName('server.simple.50').visible = Math.round((d+y*y)/2)%4==2;
-                serv1.getObjectByName('server.simple.100').visible = Math.round((d+y*y)/2)%4==3;
+                var is2HE = d%2 == 1 && Math.random()<0.2;
+                var serv1 = is2HE ? serv2he.clone() : serv.clone();
+                serv1.getObjectByName('server.' + (is2HE ? "2he" : "simple") + '.0').visible = Math.round((d+y*y)/2)%4==0;
+                serv1.getObjectByName('server.' + (is2HE ? "2he" : "simple") + '.25').visible = Math.round((d+y*y)/2)%4==1;
+                serv1.getObjectByName('server.' + (is2HE ? "2he" : "simple") + '.50').visible = Math.round((d+y*y)/2)%4==2;
+                serv1.getObjectByName('server.' + (is2HE ? "2he" : "simple") + '.100').visible = Math.round((d+y*y)/2)%4==3;
+                serv1.getObjectByName('server.' + (is2HE ? "2he" : "simple") + '.base').visible = true;
                 b.getObjectByName('server.' + Math.floor(100 + y*2 + Math.random() * 2 + d) % 20).add(serv1);
               }
               mesh.getObjectByName('rack.' + (y + 20) % 4).add(b);
@@ -84,6 +88,7 @@ window.onload = function() {
     camera.position.set(2.00*Math.cos(t),1.00,2.00*Math.sin(t));
     camera.up = new THREE.Vector3(0,1,0);
     camera.lookAt(new THREE.Vector3(0,0,0));
+
     renderer.render( scene, camera );
     setTimeout(function(){
       requestAnimationFrame( animate )
