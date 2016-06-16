@@ -14,12 +14,15 @@ window.onload = function() {
       function ( geometry ) {
         scene = geometry;
         var g = geometry.getObjectByName("grounds").clone();
-        var s = geometry.getObjectByName("racks").clone();
-        var serv = geometry.getObjectByName("server.simple").clone();
+        var rack = geometry.getObjectByName("racks").clone();
+        var serv = geometry.getObjectByName("server.1he").clone();
         var serv2he = geometry.getObjectByName("server.2he").clone();
 
-        geometry.traverse( function ( object ) { if( object instanceof THREE.Mesh) { object.visible = false; } } );
+        var Arbeitsbereich = geometry.getObjectByName("Arbeitsbereich").clone();
+        var Videowall = geometry.getObjectByName("Videowall").clone();
+        var Werkstatt = geometry.getObjectByName("Werkstatt").clone();
 
+        geometry.traverse( function ( object ) { if( object instanceof THREE.Mesh) { object.visible = false; } } );
         /*
         var object = geometry.scene;
         object.scale.set(200, 200, 200);
@@ -47,18 +50,26 @@ window.onload = function() {
             scene.add( mesh );
 
             if(Math.random()<0.4) {
-              var b = s.clone();
+              var b = rack.clone();
               for(var d=0;d<12;d++) {
                 var is2HE = d%2 == 1 && Math.random()<0.2;
                 var serv1 = is2HE ? serv2he.clone() : serv.clone();
-                serv1.getObjectByName('server.' + (is2HE ? "2he" : "simple") + '.0').visible = Math.round((d+y*y)/2)%4==0;
-                serv1.getObjectByName('server.' + (is2HE ? "2he" : "simple") + '.25').visible = Math.round((d+y*y)/2)%4==1;
-                serv1.getObjectByName('server.' + (is2HE ? "2he" : "simple") + '.50').visible = Math.round((d+y*y)/2)%4==2;
-                serv1.getObjectByName('server.' + (is2HE ? "2he" : "simple") + '.100').visible = Math.round((d+y*y)/2)%4==3;
-                serv1.getObjectByName('server.' + (is2HE ? "2he" : "simple") + '.base').visible = true;
+                serv1.getObjectByName('server.' + (is2HE ? "2he" : "1he") + '.0').visible = Math.round((d+y*y)/2)%4==0;
+                serv1.getObjectByName('server.' + (is2HE ? "2he" : "1he") + '.25').visible = Math.round((d+y*y)/2)%4==1;
+                serv1.getObjectByName('server.' + (is2HE ? "2he" : "1he") + '.50').visible = Math.round((d+y*y)/2)%4==2;
+                serv1.getObjectByName('server.' + (is2HE ? "2he" : "1he") + '.100').visible = Math.round((d+y*y)/2)%4==3;
+                serv1.getObjectByName('server.' + (is2HE ? "2he" : "1he") + '.base').visible = true;
                 b.getObjectByName('server.' + Math.floor(100 + y*2 + Math.random() * 2 + d) % 20).add(serv1);
               }
               mesh.getObjectByName('rack.' + (y + 20) % 4).add(b);
+            } else if(Math.random()<0.2) {
+              mesh.getObjectByName('rack.' + (y + 20) % 4).add(Arbeitsbereich.clone());
+              if(Math.random()<0.4) {
+                mesh.getObjectByName('rack.' + (y + 20) % 4).add(Videowall.clone());
+              }
+            } else if(Math.random()<0.2) {
+              console.log(geometry.getObjectByName("Werkstatt"));
+              mesh.getObjectByName('rack.' + (y + 20) % 4).add(Werkstatt.clone());
             }
 
             //mesh.add( b );
@@ -77,7 +88,7 @@ window.onload = function() {
   */
   //scene.add( new THREE.DirectionalLightHelper(directionalLight, 0.2) );
 
-  renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer({alpha : false, antialias: true});
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
