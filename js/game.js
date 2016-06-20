@@ -2,7 +2,9 @@ window.onload = function() {
   var camera, scene, renderer;
   var mesh;
   var t = 0;
-  var zoom = 1/4;
+  var zoom = 3/8;
+
+  var server = [];
 
   camera = new THREE.OrthographicCamera( window.innerWidth / - 100 * zoom, window.innerWidth / 100 * zoom, window.innerHeight / 100 * zoom, window.innerHeight / - 100 * zoom, -1000, 1000 );
 
@@ -43,9 +45,9 @@ window.onload = function() {
             mesh.translateZ(y*101);
             */
             mesh = g.clone();
-            mesh.translateX(x * 1.01);
+            mesh.translateX(x * 1.00);
             mesh.translateZ(0);
-            mesh.translateY(y * 1.01);
+            mesh.translateY(y * 1.00);
             //mesh.rotateX( -Math.PI / 2);
             scene.add( mesh );
 
@@ -59,6 +61,7 @@ window.onload = function() {
                 serv1.getObjectByName('server.' + (is2HE ? "2he" : "1he") + '.50').visible = Math.round((d+y*y)/2)%4==2;
                 serv1.getObjectByName('server.' + (is2HE ? "2he" : "1he") + '.100').visible = Math.round((d+y*y)/2)%4==3;
                 serv1.getObjectByName('server.' + (is2HE ? "2he" : "1he") + '.base').visible = true;
+                server.push([serv1, 'server.' + (is2HE ? "2he" : "1he")]);
                 b.getObjectByName('server.' + Math.floor(100 + y*2 + Math.random() * 2 + d) % 20).add(serv1);
               }
               mesh.getObjectByName('rack.' + (y + 20) % 4).add(b);
@@ -93,6 +96,14 @@ window.onload = function() {
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
   function animate() {
+    for (var n = server.length-1; n > 0 ; n-=Math.floor(Math.random()*12 + 1)) {
+      var iShow = Math.round(n+t*6 + Math.random()*1.9)%4;
+      server[n][0].visible = Math.cos(t+n)<0;
+      server[n][0].getObjectByName(server[n][1] + '.0').visible = iShow ==0;
+      server[n][0].getObjectByName(server[n][1] + '.25').visible = iShow==1;
+      server[n][0].getObjectByName(server[n][1] + '.50').visible = iShow==2;
+      server[n][0].getObjectByName(server[n][1] + '.100').visible = iShow==3;
+    }
     t+=0.005;
     //mesh.rotation.x += 0.005;
     //mesh.rotation.z += 0.001;
