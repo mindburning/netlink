@@ -71,7 +71,6 @@ window.onload = function() {
                 mesh.getObjectByName('rack.' + (y + 20) % 4).add(Videowall.clone());
               }
             } else if(Math.random()<0.2) {
-              console.log(geometry.getObjectByName("Werkstatt"));
               mesh.getObjectByName('rack.' + (y + 20) % 4).add(Werkstatt.clone());
             }
 
@@ -95,6 +94,7 @@ window.onload = function() {
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
+
   function animate() {
     for (var n = server.length-1; n > 0 ; n-=Math.floor(Math.random()*12 + 1)) {
       var iShow = Math.round(n+t*6 + Math.random()*1.9)%4;
