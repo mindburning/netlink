@@ -45,9 +45,9 @@ window.onload = function() {
             mesh.translateZ(y*101);
             */
             mesh = g.clone();
-            mesh.translateX(x * 1.00);
+            mesh.translateX(x * 1.40);
             mesh.translateZ(0);
-            mesh.translateY(y * 1.00);
+            mesh.translateY(y * 1.40);
             //mesh.rotateX( -Math.PI / 2);
             scene.add( mesh );
 
@@ -90,7 +90,7 @@ window.onload = function() {
   */
   //scene.add( new THREE.DirectionalLightHelper(directionalLight, 0.2) );
 
-  renderer = new THREE.WebGLRenderer({alpha : false, antialias: true});
+  renderer = new THREE.WebGLRenderer({alpha : true, antialias: false});
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
