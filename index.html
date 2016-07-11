@@ -1,6 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
   <head>
+    <meta charset="utf-8"/>
     <title>Iso - 3D rendering</title>
     <style>
       body, html { margin:0; padding: 0; overflow:hidden }
@@ -14,7 +15,60 @@
     <script src="js/ObjectLoader.js"></script>
     <script src="js/MaterialLoader.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
+    <link rel="stylesheet" href="css/flexboxgrid.min.css"></link>
+    <style type="text/css">
+      body, html {
+        padding: 0;
+        margin: 0;
+        font-family: "Arial", Arial, regular;
+        font-size: 12px;
+      }
+      .topheader {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        min-height: 10px;
+        background: rgba(150,150,180,0.75);
+        padding: 5px;
+      }
+    </style>
   </head>
   <body>
+    <div class="topheader">
+      <div id="main" class="row">
+        <div class="col-xs box center-xs">
+          <span data-action="view.rotate" data-param="-45">Turn left</span>
+          <span data-action="view.rotate" data-param="45">Turn right</span>
+        </div>
+        <div class="col-xs box center-xs">
+          Aufträge
+        </div>
+        <div class="col-xs box center-xs">
+          <div>Server</div>
+          <div class="stat_usage">
+            Netz: <span data-value="stat.usage.net">-</span>
+            HDD: <span data-value="stat.usage.hdd">-</span>
+            CPU: <span data-value="stat.usage.cpu">-</span>
+            RAM: <span data-value="stat.usage.cpu">-</span>
+            Temp.: <span data-value="stat.temp">-</span>
+          </div>
+        </div>
+        <div class="col-xs box center-xs">
+          Einkauf / Verkauf
+        </div>
+        <div class="col-xs box center-xs">
+          Bauen
+        </div>
+        <div class="col-xs box center-xs">
+          <span class="stat_money">
+            Konto: <span data-value="stat.money">-</span>
+          </span>
+          <span class="stat_energy">
+            Strom: <span data-value="stat.energy">-</span>
+          </span>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
