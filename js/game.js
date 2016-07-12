@@ -1,12 +1,16 @@
 window.onload = function() {
   var camera, scene, renderer;
   var mesh;
-  var t = 0;
+  var t = Math.PI/4;
   var zoom = 3/8;
 
   var server = [];
 
-  camera = new THREE.OrthographicCamera( window.innerWidth / - 100 * zoom, window.innerWidth / 100 * zoom, window.innerHeight / 100 * zoom, window.innerHeight / - 100 * zoom, -1000, 1000 );
+  function setCam(zoom) {
+    return new THREE.OrthographicCamera( window.innerWidth / - 100 * zoom, window.innerWidth / 100 * zoom, window.innerHeight / 100 * zoom, window.innerHeight / - 100 * zoom, -1000, 1000 );
+  }
+
+  camera = setCam(zoom);
 
   scene = new THREE.Scene();
 
@@ -90,7 +94,7 @@ window.onload = function() {
   */
   //scene.add( new THREE.DirectionalLightHelper(directionalLight, 0.2) );
 
-  renderer = new THREE.WebGLRenderer({alpha : true, antialias: false});
+  renderer = new THREE.WebGLRenderer({alpha : true, antialias: true});
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
@@ -104,7 +108,7 @@ window.onload = function() {
       server[n][0].getObjectByName(server[n][1] + '.50').visible = iShow==2;
       server[n][0].getObjectByName(server[n][1] + '.100').visible = iShow==3;
     }
-    t+=0.005;
+    //t+=0.005;
     //mesh.rotation.x += 0.005;
     //mesh.rotation.z += 0.001;
     camera.position.set(2.00*Math.cos(t),1.00,2.00*Math.sin(t));
@@ -117,4 +121,18 @@ window.onload = function() {
     },25);
   }
   animate();
+  document.querySelectorAll('[data-action]').forEach(function() {
+    this.addEventListener("click", function(ev) {
+      switch(ev.target.getAttribute('data-action')) {
+        case "view.zoom":
+          zoom*=parseFloat(ev.target.getAttribute('data-param'));
+          break;
+        case "view.rotate":
+          t+=parseFloat(ev.target.getAttribute('data-param')/360*Math.PI);
+          break;
+      }
+      camera = setCam(zoom);
+      renderer.setSize( window.innerWidth, window.innerHeight );
+    });
+  });
 };
