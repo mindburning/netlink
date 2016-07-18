@@ -2,7 +2,7 @@ window.onload = function() {
   var camera, scene, renderer;
   var mesh;
   var t = Math.PI/4;
-  var zoom = 3/8;
+  var zoom = 6/8;
 
   var server = [];
 
@@ -27,6 +27,8 @@ window.onload = function() {
         var Arbeitsbereich = geometry.getObjectByName("Arbeitsbereich").clone();
         var Videowall = geometry.getObjectByName("Videowall").clone();
         var Werkstatt = geometry.getObjectByName("Werkstatt").clone();
+        var Lager = geometry.getObjectByName("Lager4").clone();
+        var wall01 = geometry.getObjectByName("wall.simple.001").clone();
 
         geometry.traverse( function ( object ) { if( object instanceof THREE.Mesh) { object.visible = false; } } );
         /*
@@ -36,8 +38,8 @@ window.onload = function() {
         */
 
         var texture = new THREE.ImageUtils.loadTexture( 'assets/models/jpg/MetalFloorsBare0063_2_400.jpg' );
-        for (var x=-10;x<10;x++) {
-          for (var y=-10;y<10;y++) {
+        for (var x=-10;x<=10;x++) {
+          for (var y=-10;y<=10;y++) {
             var material = new THREE.MeshBasicMaterial( { map: texture } );
             var materialP = new THREE.MeshPhongMaterial( { map: texture } );
             //scene.overrideMaterial = material;
@@ -54,6 +56,12 @@ window.onload = function() {
             mesh.translateY(y * 1.40);
             //mesh.rotateX( -Math.PI / 2);
             scene.add( mesh );
+            if (y==-10) {
+              mesh.getObjectByName('wall.3').add(wall01.clone());
+            }
+            if (x==10) {
+              mesh.getObjectByName('wall.2').add(wall01.clone());
+            }
 
             if(Math.random()<0.4) {
               var b = rack.clone();
@@ -76,6 +84,12 @@ window.onload = function() {
               }
             } else if(Math.random()<0.2) {
               mesh.getObjectByName('rack.' + (y + 20) % 4).add(Werkstatt.clone());
+            } else if(Math.random()<0.4) {
+              var lager_tmp = Lager.clone();
+              lager_tmp.getObjectByName('Lager2_space.000_space.001').visible = false;
+              lager_tmp.getObjectByName('Lager4_space.000_space.003').visible = true;
+              lager_tmp.getObjectByName('Lager6_space.000_space.005').visible = false;
+              mesh.getObjectByName('rack.' + (y + 20) % 4).add(lager_tmp);
             }
 
             //mesh.add( b );
@@ -111,6 +125,7 @@ window.onload = function() {
     //t+=0.005;
     //mesh.rotation.x += 0.005;
     //mesh.rotation.z += 0.001;
+
     camera.position.set(2.00*Math.cos(t),1.00,2.00*Math.sin(t));
     camera.up = new THREE.Vector3(0,1,0);
     camera.lookAt(new THREE.Vector3(0,0,0));
