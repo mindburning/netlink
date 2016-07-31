@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <title>Iso - 3D rendering</title>
+    <!-- http://paletton.com/#uid=73F2v0klluiuM3Xrbk0cCMi1H+T -->
     <style>
       body, html { margin:0; padding: 0; overflow:hidden }
     </style>
@@ -17,11 +18,26 @@
     <script type="text/javascript" src="js/game.js"></script>
     <link rel="stylesheet" href="css/flexboxgrid.min.css"></link>
     <style type="text/css">
+      @font-face {
+        font-family: 'Visitor TT2 BRK';
+        font-style: normal;
+        font-weight: normal;
+        src: local('Visitor TT2 BRK'), url('assets/fonts/visitor2.woff') format('woff');
+      }
+
+
+      @font-face {
+        font-family: 'Visitor TT1 BRK';
+        font-style: normal;
+        font-weight: normal;
+        src: local('Visitor TT1 BRK'), url('assets/fonts/visitor1.woff') format('woff');
+      }
+
       body, html {
         padding: 0;
         margin: 0;
-        font-family: "Arial", Arial, regular;
-        font-size: 12px;
+        font-family: "Visitor TT1 BRK", "Arial", Arial, regular;
+        font-size: 16px;
       }
       .topheader {
         position: fixed;
@@ -29,8 +45,10 @@
         right: 0;
         left: 0;
         min-height: 10px;
-        background: rgba(150,150,180,0.75);
+        background: rgba(135,160,220,0.85);
         padding: 5px;
+        /* border-bottom: 2px solid #183969; */
+        box-shadow: 0 2px 5px #183969;
       }
     </style>
   </head>
@@ -51,13 +69,16 @@
           Aufträge
         </div>
         <div class="col-xs box center-xs">
-          <div>Server</div>
           <div class="stat_usage">
-            Netz: <span data-value="stat.usage.net">-</span>
-            HDD: <span data-value="stat.usage.hdd">-</span>
-            CPU: <span data-value="stat.usage.cpu">-</span>
-            RAM: <span data-value="stat.usage.cpu">-</span>
-            Temp.: <span data-value="stat.temp">-</span>
+            <div>
+              CPU: <span data-value="stat.usage.cpu">-</span>
+              RAM: <span data-value="stat.usage.cpu">-</span>
+              HDD: <span data-value="stat.usage.hdd">-</span>
+            </div>
+            <div>
+              Netz: <span data-value="stat.usage.net">-</span>
+              Temp.: <span data-value="stat.temp">-</span>
+            </div>
           </div>
         </div>
         <div class="col-xs box center-xs">
@@ -67,12 +88,12 @@
           Bauen
         </div>
         <div class="col-xs box center-xs">
-          <span class="stat_money">
+          <div class="stat_money">
             Konto: <span data-value="stat.money">-</span>
-          </span>
-          <span class="stat_energy">
+          </div>
+          <div class="stat_energy">
             Strom: <span data-value="stat.energy">-</span>
-          </span>
+          </div>
         </div>
       </div>
     </div>

@@ -63,7 +63,9 @@ window.onload = function() {
               mesh.getObjectByName('wall.2').add(wall01.clone());
             }
 
-            if(Math.random()<0.4) {
+            var rValue = Math.floor(Math.random() * 100);
+
+            if(Math.random()<0.25) {
               var b = rack.clone();
               for(var d=0;d<12;d++) {
                 var is2HE = d%2 == 1 && Math.random()<0.2;
@@ -76,20 +78,20 @@ window.onload = function() {
                 server.push([serv1, 'server.' + (is2HE ? "2he" : "1he")]);
                 b.getObjectByName('server.' + Math.floor(100 + y*2 + Math.random() * 2 + d) % 20).add(serv1);
               }
-              mesh.getObjectByName('rack.' + (y + 20) % 4).add(b);
+              mesh.getObjectByName('rack.' + (y + parseInt(x/4) + 80) % 4).add(b);
             } else if(Math.random()<0.2) {
-              mesh.getObjectByName('rack.' + (y + 20) % 4).add(Arbeitsbereich.clone());
+              mesh.getObjectByName('rack.' + (y + parseInt(x/4) + 80) % 4).add(Arbeitsbereich.clone());
               if(Math.random()<0.4) {
-                mesh.getObjectByName('rack.' + (y + 20) % 4).add(Videowall.clone());
+                mesh.getObjectByName('rack.' + (y + parseInt(x/4) + 80) % 4).add(Videowall.clone());
               }
             } else if(Math.random()<0.2) {
-              mesh.getObjectByName('rack.' + (y + 20) % 4).add(Werkstatt.clone());
-            } else if(Math.random()<0.4) {
+              mesh.getObjectByName('rack.' + (y + parseInt(x/4) + 80) % 4).add(Werkstatt.clone());
+            } else if(Math.random()<0.2) {
               var lager_tmp = Lager.clone();
-              lager_tmp.getObjectByName('Lager2_space.000_space.001').visible = false;
-              lager_tmp.getObjectByName('Lager4_space.000_space.003').visible = true;
-              lager_tmp.getObjectByName('Lager6_space.000_space.005').visible = false;
-              mesh.getObjectByName('rack.' + (y + 20) % 4).add(lager_tmp);
+              lager_tmp.getObjectByName('Lager2_space.000_space.001').visible = rValue % 3 == 0;
+              lager_tmp.getObjectByName('Lager4_space.000_space.003').visible = rValue % 3 == 1;
+              lager_tmp.getObjectByName('Lager6_space.000_space.005').visible = rValue % 3 == 2;
+              mesh.getObjectByName('rack.' + (y + parseInt(x/4) + 80) % 4).add(lager_tmp);
             }
 
             //mesh.add( b );
